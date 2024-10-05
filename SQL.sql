@@ -1,4 +1,8 @@
-CREATE TABLE cliente (
+Drop table stj.cliente;
+Drop table stj.produto;
+drop table stj.pedido;
+
+CREATE TABLE stj.cliente (
   id_cliente int NOT NULL AUTO_INCREMENT,
   nome varchar(100) NOT NULL,
   senha varchar(10) NOT NULL,
@@ -9,7 +13,7 @@ CREATE TABLE cliente (
   PRIMARY KEY (id_cliente)
 )ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE produto (
+CREATE TABLE stj.produto (
   id_produto int NOT NULL AUTO_INCREMENT,
   nome varchar(100) NOT NULL,
   descricao varchar(200) NOT NULL,
@@ -18,7 +22,7 @@ CREATE TABLE produto (
   PRIMARY KEY (id_produto)
 )ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE Pedido (
+CREATE TABLE stj.Pedido (
   id_cliente int NOT NULL,
   id_produto int NOT NULL,
   quantidade int NOT NULL,
