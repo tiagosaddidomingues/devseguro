@@ -17,8 +17,10 @@ CREATE TABLE stj.produto (
   id_produto int NOT NULL AUTO_INCREMENT,
   nome varchar(100) NOT NULL,
   descricao varchar(200) NOT NULL,
-  preco Decimal(10,2) NULL,
-  
+  preco Decimal(10,2) NOT NULL,
+  peso Decimal(10,3) NOT NULL,
+  quantidade int NOT NULL,
+    
   PRIMARY KEY (id_produto)
 )ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

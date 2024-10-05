@@ -5,8 +5,9 @@ public class Produto {
 	private String nome;
 	private String descricao;
 	private float preco;
-
 	private float peso;
+	private int quantidade;
+
 	public float getPeso() {
 		return peso;
 	}
@@ -14,8 +15,7 @@ public class Produto {
 		this.peso = peso;
 	}
 
-	private int quantidade;
-	
+
 	public int getId() {
 		return id;
 	}
