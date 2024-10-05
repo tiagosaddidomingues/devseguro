@@ -1,2 +1,2 @@
-# desingpatterns
-Projeto final PUCPR matéria Desing Patterns junho-2024
+# devseguro
+Projeto final PUCPR matéria Desenvolvimento Seguro outubro-2024
