@@ -1,6 +1,6 @@
 package com.michellotiago.service.Patterns.Observer;
 
-import com.michellotiago.repository.produto.dto.Produto;
+import com.michellotiago.entity.Produto;
 
 public class ObservadorEmail implements IObservador {
 
