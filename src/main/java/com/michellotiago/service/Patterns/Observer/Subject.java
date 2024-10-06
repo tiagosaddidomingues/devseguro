@@ -3,7 +3,7 @@ package com.michellotiago.service.Patterns.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.michellotiago.entity.Produto;
+import com.michellotiago.model.Produto;
 
 
 public class Subject implements ISubject {

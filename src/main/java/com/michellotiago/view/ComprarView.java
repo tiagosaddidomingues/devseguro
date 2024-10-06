@@ -1,17 +1,10 @@
-package com.michellotiago.Controller;
+package com.michellotiago.view;
 
-import com.michellotiago.model.dao.ClienteDAO;
-import com.michellotiago.model.Cliente;
-import com.michellotiago.model.dao.PedidoDAO;
 import com.michellotiago.model.Pedido;
-import com.michellotiago.model.dao.ProdutoDAO;
 import com.michellotiago.model.Produto;
-import com.michellotiago.service.Patterns.Decorator.Enderecador;
-import com.michellotiago.service.Patterns.Decorator.EnderecadorComBordas;
-import com.michellotiago.service.Patterns.Decorator.EnderecadorSimples;
-import com.michellotiago.service.Patterns.Decorator.EnderercadorCaixaAlta;
-import com.michellotiago.service.Patterns.Observer.*;
-import com.michellotiago.service.Patterns.Singleton.Configuration;
+import com.michellotiago.model.dao.ClienteDAO;
+import com.michellotiago.model.dao.PedidoDAO;
+import com.michellotiago.model.dao.ProdutoDAO;
 import com.michellotiago.service.Patterns.Strategy.ExpressShipping;
 import com.michellotiago.service.Patterns.Strategy.NormalShipping;
 import com.michellotiago.service.Patterns.Strategy.Order;
@@ -23,10 +16,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import static com.michellotiago.lib.Console.limparConsole;
-import static java.lang.Thread.sleep;
 
-public class App {
-    Scanner scanner = new Scanner(System.in);
+/**
+ * @author $ {USER}
+ **/
+public class ComprarView {
+    private Scanner scanner;
     String local;
     String empresa;
 
@@ -35,95 +30,29 @@ public class App {
     ProdutoDAO produtos = new ProdutoDAO();
     //Cliente cliente = new Cliente();
 
+    public ComprarView() {
+        this.scanner = new Scanner(System.in);
+    }
+    public int opcaoDeMenu(){
 
-    public static void main(String[] args) {
-        App app = new App();
-        Cliente cliente = null;
-        app.configuracaoRegional();
-        app.conectar();
-        cliente = app.logar();
-        if (cliente!=null) {
-            app.observar(cliente);
-            app.comprar();
-            app.enviar(cliente);
-        }
+        System.out.println("(1) Cadastrar Novo Usuário ");
+        System.out.println("(2) Entrar com Usuário existente");
+        System.out.println("(9) Sair");
+        System.out.print("Opção: ");
+        return scanner.nextInt();
+    }
+    public void opcaoInvalida(){
+        System.out.println("Opção inválida!");
+    }
+    public void opcaoSair(){
+        System.out.println("Saida do Sistema!");
+    }
+    public void cadastroRealizado(){
+        System.out.println("Cadastro Realizado!");
     }
 
-    private void enviar(Cliente cliente) {
-        Enderecador enderecador = new EnderecadorSimples();
-         enderecador = new EnderercadorCaixaAlta(enderecador);
-         enderecador = new EnderecadorComBordas(enderecador);
-
-        String enderecoFormatado = enderecador.preparaEndereco(cliente.getEndereco());
-
-        System.out.println("\n\nA entrega será no seguinte endereço:\n\n");
-        System.out.println(enderecoFormatado);
-    }
-
-    private void observar(Cliente clente) {
-        System.out.println("há um novo produto na Mesbla. Você quer saber qual é? (1) Sim; (0) Não");
-        int item;
-        String texto="";
-
-        while(true) {
-            texto = scanner.nextLine();
-            if (texto.isEmpty()) {
-                System.out.println("entre com valor O ou 1");
-                continue;
-            }
-
-            try {
-                item = Integer.parseInt(texto.trim());
-                if (item==0){ return;}
-                if (item==1){ break;}
-                System.out.println("entre com valor O ou 1");
-                continue;
-            } catch (NumberFormatException e) {
-                System.out.println("entre com valor O ou 1");
-                continue;
-            }
-        }
-        Produto produto = new Produto();
-        produto.setId(6);
-        produto.setNome("Cinto");;
-        produto.setDescricao("Cinto de couro");
-        produto.setPeso(0.20f);
-        produto.setPreco(120.00f);
-        produto.setQuantidade(30);
-       // produtos.inserir(produto);
-        IObservador observador1 = new ObservadorSistema(1,"http://mesbla.com.br");
-        IObservador observador2 = new ObservadorEmail(2,clente.geteMail());
-
-        ISubject subject = new Subject(produto);
-        subject.registrarObservador(observador1);
-        subject.registrarObservador(observador2);
-        subject.notificarTodos();
-    }
-
-    public void configuracaoRegional() {
-        Configuration instance = Configuration.getInstance();
-        local = instance.getProperty("local");
-        System.out.println(local);
-
-        empresa = instance.getProperty("loja");
-        System.out.println(empresa);
-    }
-
-    public void conectar() {
-    }
-
-    public Cliente logar() {
-        Cliente cliente = null;
-        System.out.println("entre com o nome do usuário.");
-        String nome = scanner.nextLine();
-        System.out.println("entre com a sua senha.");
-        String senha = scanner.nextLine();
-        //cliente;// =clientes.findByNameAndSenha(nome, senha);
-        if (cliente ==null) {
-            System.out.println("Usuário não cadastrado ou senha invalida.");
-            return null;
-        }
-        return cliente;
+    public void logSucesso() {
+        System.out.println("Login com Sucesso!");
     }
 
     public void listarProdutos() {
@@ -257,6 +186,7 @@ public class App {
             System.out.println("Produto " + produto.getNome() + " - preço unitário R$" + df.format(produto.getPreco())
                     + " - subtotal R$" + df.format(produto.getPreco()* produto.getQuantidade()));
         }
-           System.out.println("\n O valor total da Compra é: R$" + df.format(valor + frete));
+        System.out.println("\n O valor total da Compra é: R$" + df.format(valor + frete));
     }
 }
+

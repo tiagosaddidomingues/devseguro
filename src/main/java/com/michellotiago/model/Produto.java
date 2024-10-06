@@ -1,4 +1,4 @@
-package com.michellotiago.entity;
+package com.michellotiago.model;
 
 public class Produto {
 	private int id;

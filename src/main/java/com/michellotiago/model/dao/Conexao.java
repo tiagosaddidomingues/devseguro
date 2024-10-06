@@ -1,18 +1,21 @@
-package com.michellotiago.service.Patterns.FactoryMethod;
+package com.michellotiago.model.dao;
 
+/**
+ * @author $ {USER}
+ **/
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MySQL extends DatabaseFactory implements IDatabase {
-    private static MySQL conexao;
+public class Conexao {
+
+    private static Conexao conexao;
     private String jdbc;
     private String usuario;
     private String senha;
     private Connection con;
 
-    public  void connect(){
-        System.out.println("Connecting to MySQL database.");
+    private Conexao() {
         usuario = "admin";
         senha = "admin";
         jdbc = "jdbc:mysql://localhost:3306/stj?useSSL=false";
@@ -20,16 +23,19 @@ public class MySQL extends DatabaseFactory implements IDatabase {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(jdbc, usuario, senha);
-        }
-        catch(ClassNotFoundException | SQLException ex){
+        } catch (ClassNotFoundException | SQLException ex){
             ex.printStackTrace();
         }
     }
 
-    public MySQL createDatabase() {
-        if(conexao == null) {
-            conexao = new MySQL();
+    public static Conexao getConexao() {
+        if (conexao == null) {
+            conexao = new Conexao();
         }
         return conexao;
+    }
+
+    public Connection getConnection() {
+        return this.con;
     }
 }

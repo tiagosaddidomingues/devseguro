@@ -1,9 +1,9 @@
-package com.michellotiago.dao;
+package com.michellotiago.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.michellotiago.entity.Produto;
+import com.michellotiago.model.Produto;
 
 public class ProdutoDAO  {
 

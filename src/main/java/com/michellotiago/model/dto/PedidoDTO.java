@@ -1,4 +1,4 @@
-package com.michellotiago.dto;
+package com.michellotiago.model.dto;
 
 import java.time.LocalDate;
 

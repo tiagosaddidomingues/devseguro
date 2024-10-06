@@ -1,6 +1,6 @@
 package com.michellotiago.view;
 
-import com.michellotiago.entity.Cliente;
+import com.michellotiago.model.Cliente;
 
 import java.util.Scanner;
 

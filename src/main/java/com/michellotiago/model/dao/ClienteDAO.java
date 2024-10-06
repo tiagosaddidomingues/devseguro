@@ -1,9 +1,6 @@
-package com.michellotiago.dao;
+package com.michellotiago.model.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.michellotiago.entity.Cliente;
+import com.michellotiago.model.Cliente;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

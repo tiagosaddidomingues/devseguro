@@ -1,40 +1,43 @@
 package com.michellotiago.Controller;
 
+import com.michellotiago.view.ComprarView;
 import com.michellotiago.view.MenuView;
 
 /**
  * @author $ {USER}
  **/
-public class MenuController {
-    private MenuView menuView;
+public class ComprarController {
+    private ComprarView comprarView;
     private int opcao;
     private CadastrarClienteController cadastrarClienteController;
     private LogarClienteController logarClienteController;
     private ComprarController comprarController;
 
-    public MenuController() {
+    public ComprarController(){
         opcao = 0;
-        menuView = new MenuView();
+        comprarView = new ComprarView();
         while (opcao != 9) {
-            opcao = menuView.opcaoDeMenu();
+            opcao = comprarView.opcaoDeMenu();
 
             switch (opcao) {
                 case 1:
                     cadastrarClienteController = new CadastrarClienteController();
-                    menuView.cadastroRealizado();
+                    comprarView.cadastroRealizado();
                     return;
                 case 2:
                     logarClienteController = new LogarClienteController();
                     if (logarClienteController != null){
-                        menuView.logSucesso();
+                        comprarView.logSucesso();
                         comprarController = new ComprarController();
                     }
                 case 9:
-                    menuView.opcaoSair();
+                    comprarView.opcaoSair();
                     break;
                 default:
-                    menuView.opcaoInvalida();
+                    comprarView.opcaoInvalida();
             }
         }
     }
+
 }
+

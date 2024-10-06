@@ -6,9 +6,9 @@ import java.util.Scanner;
  * @author $ {USER}
  **/
 public class MenuView {
-    private Scanner sc;
+    private Scanner scanner;
     public MenuView() {
-        this.sc = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
     }
     public int opcaoDeMenu(){
 
@@ -16,7 +16,7 @@ public class MenuView {
         System.out.println("(2) Entrar com Usuário existente");
         System.out.println("(9) Sair");
         System.out.print("Opção: ");
-        return sc.nextInt();
+        return scanner.nextInt();
     }
     public void opcaoInvalida(){
         System.out.println("Opção inválida!");
@@ -26,5 +26,9 @@ public class MenuView {
     }
     public void cadastroRealizado(){
         System.out.println("Cadastro Realizado!");
+    }
+
+    public void logSucesso() {
+        System.out.println("Login com Sucesso!");
     }
 }

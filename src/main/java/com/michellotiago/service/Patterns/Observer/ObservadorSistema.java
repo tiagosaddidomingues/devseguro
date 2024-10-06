@@ -1,6 +1,6 @@
 package com.michellotiago.service.Patterns.Observer;
 
-import com.michellotiago.entity.Produto;
+import com.michellotiago.model.Produto;
 
 public class ObservadorSistema implements IObservador {
 

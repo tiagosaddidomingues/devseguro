@@ -1,7 +1,7 @@
 package com.michellotiago.Controller;
 
-import com.michellotiago.dao.ClienteDAO;
-import com.michellotiago.entity.Cliente;
+import com.michellotiago.model.dao.ClienteDAO;
+import com.michellotiago.model.Cliente;
 import com.michellotiago.view.CadastrarClienteView;
 
 /**

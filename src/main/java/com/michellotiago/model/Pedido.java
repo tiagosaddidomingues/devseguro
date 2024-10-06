@@ -1,4 +1,4 @@
-package com.michellotiago.entity;
+package com.michellotiago.model;
 
 import java.time.LocalDate;
 import java.util.List;

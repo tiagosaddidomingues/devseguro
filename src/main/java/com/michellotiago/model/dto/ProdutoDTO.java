@@ -1,4 +1,4 @@
-package com.michellotiago.dto;
+package com.michellotiago.model.dto;
 
 public class ProdutoDTO {
 	private int id;
