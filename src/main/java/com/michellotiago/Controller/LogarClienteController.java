@@ -13,15 +13,19 @@ import java.util.Scanner;
 public class LogarClienteController {
     private LogarClienteView cuv;
     private Cliente cliente;
-    private ClienteDAO cDAO;
+    private ClienteDAO clienteDAO;
 
-
-    public LogarClienteController(){
+/*
+    public LogarClienteController() {
 
         cuv = new LogarClienteView();
         cliente = cuv.logarCliente();
-        cDAO = new ClienteDAO();
-        cDAO.inserirCliente(cliente);
+        ClienteDAO = new ClienteDAO();
+        ClienteDAO.inserirCliente(cliente);
     }
+*/
+    public Cliente encontrarUsuario(String nome, String senha) {
+        return clienteDAO.findByNameAndSenha(nome, senha);
 
+    }
 }

@@ -29,6 +29,7 @@ public class MenuController {
                         menuView.logSucesso();
                         comprarController = new ComprarController();
                     }
+
                 case 9:
                     menuView.opcaoSair();
                     break;

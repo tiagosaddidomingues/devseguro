@@ -1,20 +1,21 @@
 package com.michellotiago.model;
 
+import com.michellotiago.model.dao.ClienteDAO;
+
 public class Cliente {
 	private int id;
-
-	public Cliente(String nome, String senha) {
-		this.nome = nome;
-		this.senha = senha;
-	}
-
 	String nome;
 	String senha;
 	private String eMail;
 	private String telefone;
 	private String endereco;
 	private boolean promocao;
-	
+
+	public Cliente(String nome, String senha) {
+		this.nome = nome;
+		this.senha = senha;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -50,7 +51,5 @@ public class Cliente {
 	public String getEndereco() { return endereco;}
 	public void setEndereco(String endereco) { this.endereco = endereco;}
 
-	public Cliente findByNameAndSenha(String nome, String senha) {
-		return null;
-	}
+
 }

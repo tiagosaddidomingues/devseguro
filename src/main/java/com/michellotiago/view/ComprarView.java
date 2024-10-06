@@ -33,23 +33,6 @@ public class ComprarView {
     public ComprarView() {
         this.scanner = new Scanner(System.in);
     }
-    public int opcaoDeMenu(){
-
-        System.out.println("(1) Cadastrar Novo Usuário ");
-        System.out.println("(2) Entrar com Usuário existente");
-        System.out.println("(9) Sair");
-        System.out.print("Opção: ");
-        return scanner.nextInt();
-    }
-    public void opcaoInvalida(){
-        System.out.println("Opção inválida!");
-    }
-    public void opcaoSair(){
-        System.out.println("Saida do Sistema!");
-    }
-    public void cadastroRealizado(){
-        System.out.println("Cadastro Realizado!");
-    }
 
     public void logSucesso() {
         System.out.println("Login com Sucesso!");
@@ -65,7 +48,7 @@ public class ComprarView {
         }
     }
 
-    public void comprar() {
+    public void opcaoDeMenu() {
         int item = 0, quantidade = 0;
         DecimalFormat df = new DecimalFormat("#,###.00");
         String nome = "";

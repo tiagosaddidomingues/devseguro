@@ -14,29 +14,8 @@ public class ComprarController {
     private ComprarController comprarController;
 
     public ComprarController(){
-        opcao = 0;
         comprarView = new ComprarView();
-        while (opcao != 9) {
-            opcao = comprarView.opcaoDeMenu();
-
-            switch (opcao) {
-                case 1:
-                    cadastrarClienteController = new CadastrarClienteController();
-                    comprarView.cadastroRealizado();
-                    return;
-                case 2:
-                    logarClienteController = new LogarClienteController();
-                    if (logarClienteController != null){
-                        comprarView.logSucesso();
-                        comprarController = new ComprarController();
-                    }
-                case 9:
-                    comprarView.opcaoSair();
-                    break;
-                default:
-                    comprarView.opcaoInvalida();
-            }
-        }
+        comprarView.opcaoDeMenu();
     }
 
 }

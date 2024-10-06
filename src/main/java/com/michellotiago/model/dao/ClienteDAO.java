@@ -3,6 +3,7 @@ package com.michellotiago.model.dao;
 import com.michellotiago.model.Cliente;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ClienteDAO {
@@ -17,10 +18,8 @@ public class ClienteDAO {
 	}
 
 	public void inserirCliente(Cliente u) {
-		try {
-			PreparedStatement ps;
-			String query = "INSERT INTO usuario (nome, senha) VALUES (?, ?)";
-			ps = conexao.getConnection().prepareStatement(query);
+		String query = "INSERT INTO stj.cliente (nome, senha) VALUES (?, ?)";
+		try (PreparedStatement ps = conexao.getConnection().prepareStatement(query);) {
 			ps.setString(1, u.getNome());
 			ps.setString(2, u.getSenha());
 			ps.executeUpdate();
@@ -30,5 +29,21 @@ public class ClienteDAO {
 			ex.printStackTrace();
 		}
 	}
-
+	public Cliente findByNameAndSenha(String nome, String senha) {
+		ClienteDAO clienteDao = new ClienteDAO();
+		String query = "SELECT nome,senha FROM STJ.CLIENTE where nome = ? and senha = ?";
+		try (PreparedStatement ps = conexao.getConnection().prepareStatement(query);) {
+			ps.setString(1, nome);
+			ps.setString(2, senha);
+			ResultSet rst = ps.executeQuery();
+			rst.next();
+			Cliente cliente;
+            cliente = new Cliente(rst.getString(1),rst.getString(2));
+            return cliente;
+		}
+		catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 }

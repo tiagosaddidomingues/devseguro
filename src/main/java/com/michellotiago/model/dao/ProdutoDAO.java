@@ -1,5 +1,8 @@
 package com.michellotiago.model.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +11,6 @@ import com.michellotiago.model.Produto;
 public class ProdutoDAO  {
 
 	List <Produto> produtos = new ArrayList<>();
-
 	private int id;
 	String nome;
 	private String descricao;
@@ -36,6 +38,25 @@ public class ProdutoDAO  {
 	}
 	public List<Produto> getAll(){
 		List<Produto> produtoss = new ArrayList<>();
+		String query = "SELECT produto.id_produto, produto.nome, produto.descricao, produto.preco," +
+				"produto.peso,produto`.`quantidade" +
+				" FROM stj.produto";
+		try (PreparedStatement ps = Conexao.getConexao().getConnection().prepareStatement(query)){
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Produto produto = new Produto();
+				produto.setNome(rs.getString(2));
+				produto.setDescricao(rs.getString(3));
+				produto.setPreco(rs.getFloat(4));
+				produto.setPeso(rs.getFloat(5));
+				produto.setQuantidade(rs.getInt(6));
+				produtoss.add(produto);
+			}
+		}
+		catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+
 
 		for (Produto produto: produtos){
 				produtoss.add(produto);
