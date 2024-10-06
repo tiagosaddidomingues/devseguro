@@ -1,5 +1,7 @@
 package com.michellotiago.model;
 
+import java.time.LocalDate;
+
 public class Produto {
 	private int id;
 	private String nome;
@@ -7,6 +9,7 @@ public class Produto {
 	private float preco;
 	private float peso;
 	private int quantidade;
+	private LocalDate date;
 
 	public float getPeso() {
 		return peso;
@@ -48,5 +51,7 @@ public class Produto {
 		this.quantidade = quantidade;
 	}
 
+	public LocalDate getDate() {return date;}
 
+	public void setDate(LocalDate date) {this.date = date;}
 }

@@ -36,7 +36,7 @@ public class ProdutoDAO  {
 	public void delete(int id) {
 		// TODO Auto-generated method stub
 	}
-	public List<Produto> getAll(){
+	public List<Produto> findAll(){
 		List<Produto> produtoss = new ArrayList<>();
 		String query = "SELECT produto.id_produto, produto.nome, produto.descricao, produto.preco," +
 				"produto.peso,produto`.`quantidade" +
@@ -76,5 +76,4 @@ public class ProdutoDAO  {
 		}
 		return produto;
 		}
-
-	}
+}

@@ -129,7 +129,7 @@ public class App {
     public void listarProdutos() {
         DecimalFormat df = new DecimalFormat("#,###.00");
         System.out.println("\n\n Os produtos da loja são os seguintes:\n");
-        List<Produto> produtos = this.produtos.getAll();
+        List<Produto> produtos = this.produtos.findAll();
         Pedido pedido = new Pedido();
         for (Produto produto : produtos) {
             System.out.println("item: " + produto.getId() + " - " + produto.getNome() + " - R$" + df.format(produto.getPreco()));

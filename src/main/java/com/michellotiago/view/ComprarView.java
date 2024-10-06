@@ -25,23 +25,20 @@ public class ComprarView {
     String local;
     String empresa;
 
-    ClienteDAO clientes = new ClienteDAO();
-    PedidoDAO pedidos = new PedidoDAO();
-    ProdutoDAO produtos = new ProdutoDAO();
+    ClienteDAO clienteDAO = new ClienteDAO();
+    PedidoDAO pedidoDAO = new PedidoDAO();
+    ProdutoDAO produtoDAO = new ProdutoDAO();
     //Cliente cliente = new Cliente();
 
     public ComprarView() {
         this.scanner = new Scanner(System.in);
     }
 
-    public void logSucesso() {
-        System.out.println("Login com Sucesso!");
-    }
 
     public void listarProdutos() {
         DecimalFormat df = new DecimalFormat("#,###.00");
         System.out.println("\n\n Os produtos da loja são os seguintes:\n");
-        List<Produto> produtos = this.produtos.getAll();
+        List<Produto> produtos = this.produtoDAO.findAll();
         Pedido pedido = new Pedido();
         for (Produto produto : produtos) {
             System.out.println("item: " + produto.getId() + " - " + produto.getNome() + " - R$" + df.format(produto.getPreco()));
@@ -53,7 +50,7 @@ public class ComprarView {
         DecimalFormat df = new DecimalFormat("#,###.00");
         String nome = "";
         Pedido pedido = new Pedido();
-        List<Produto> produtoscompra = new ArrayList<>();
+        List<Produto> compraprodutos = new ArrayList<>();
         while (true) {
             limparConsole();
             listarProdutos();
@@ -78,10 +75,10 @@ public class ComprarView {
                 continue;
             }
             Produto produtoPedido;
-            produtoPedido = produtos.findByIDAndQuatidade(item, quantidade);
-            if ((produtoPedido != null) && (produtoscompra.size() > 0)) {
+            produtoPedido = produtoDAO.findByIDAndQuatidade(item, quantidade);
+            if ((produtoPedido != null) && (compraprodutos.size() > 0)) {
                 boolean existe = false;
-                for (Produto produtosSelecionado : produtoscompra) {
+                for (Produto produtosSelecionado : compraprodutos) {
                     if (produtosSelecionado.getId() == produtoPedido.getId()) {
                         Produto novoProduto = new Produto();
                         novoProduto.setId(produtoPedido.getId());
@@ -90,7 +87,7 @@ public class ComprarView {
                         novoProduto.setDescricao(produtoPedido.getDescricao());
                         novoProduto.setPreco(produtoPedido.getPreco());
                         novoProduto.setPeso(produtoPedido.getPeso());
-                        produtoscompra.set(produtoscompra.indexOf(produtosSelecionado), novoProduto);
+                        compraprodutos.set(compraprodutos.indexOf(produtosSelecionado), novoProduto);
                         existe = true;
                         break;
                     }
@@ -103,7 +100,7 @@ public class ComprarView {
                     novoProduto.setDescricao(produtoPedido.getDescricao());
                     novoProduto.setPreco(produtoPedido.getPreco());
                     novoProduto.setPeso(produtoPedido.getPeso());
-                    produtoscompra.add(novoProduto);
+                    compraprodutos.add(novoProduto);
                 }
             } else {
                 if (produtoPedido != null) {
@@ -114,15 +111,15 @@ public class ComprarView {
                     novoProduto.setDescricao(produtoPedido.getDescricao());
                     novoProduto.setPreco(produtoPedido.getPreco());
                     novoProduto.setPeso(produtoPedido.getPeso());
-                    produtoscompra.add(novoProduto);
+                    compraprodutos.add(novoProduto);
                 }
             }
             System.out.println("Sua seleção de Compra até agora é a seguinte: ");
-            for (Produto produto : produtoscompra) {
+            for (Produto produto : compraprodutos) {
                 System.out.println("Item " + produto.getId() + ", quantidade " + produto.getQuantidade());
             }
         }
-        finalizarCompra(produtoscompra);
+        finalizarCompra(compraprodutos);
     }
 
     public void finalizarCompra(List<Produto> produtosCompra) {
@@ -170,6 +167,7 @@ public class ComprarView {
                     + " - subtotal R$" + df.format(produto.getPreco()* produto.getQuantidade()));
         }
         System.out.println("\n O valor total da Compra é: R$" + df.format(valor + frete));
+        pedidoDAO.saveAll(produtosCompra);
     }
 }
 

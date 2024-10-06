@@ -33,3 +33,5 @@ CREATE TABLE stj.Pedido (
   
   PRIMARY KEY (id_cliente,id_produto)
 )ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+SELECT nome,senha FROM STJ.CLIENTE where nome = 'tiago' and senha = '11111';
