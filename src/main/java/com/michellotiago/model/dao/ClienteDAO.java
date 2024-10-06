@@ -9,6 +9,7 @@ import java.sql.SQLException;
 public class ClienteDAO {
 
 	private Conexao conexao;
+	private Cliente cliente;
 
 	public boolean retornarIgualdadeDeStrings(String nome1, String nome2){
 		return nome1.equals(nome2);
@@ -37,7 +38,6 @@ public class ClienteDAO {
 			ps.setString(2, senha);
 			ResultSet rst = ps.executeQuery();
 			rst.next();
-			Cliente cliente;
             cliente = new Cliente(rst.getString(1),rst.getString(2));
             return cliente;
 		}
@@ -45,5 +45,9 @@ public class ClienteDAO {
 			ex.printStackTrace();
 		}
 		return null;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
 	}
 }

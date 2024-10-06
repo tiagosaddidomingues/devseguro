@@ -1,5 +1,6 @@
 package com.michellotiago.Controller;
 
+import com.michellotiago.model.Cliente;
 import com.michellotiago.view.ComprarView;
 import com.michellotiago.view.MenuView;
 
@@ -13,8 +14,8 @@ public class ComprarController {
     private LogarClienteController logarClienteController;
     private ComprarController comprarController;
 
-    public ComprarController(){
-        comprarView = new ComprarView();
+    public ComprarController(Cliente cliente){
+        comprarView = new ComprarView(cliente);
         comprarView.opcaoDeMenu();
     }
 

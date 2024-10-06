@@ -15,17 +15,13 @@ public class LogarClienteController {
     private Cliente cliente;
     private ClienteDAO clienteDAO;
 
-/*
-    public LogarClienteController() {
 
+    public LogarClienteController() {
+        }
+
+    public Cliente encontrarUsuario() {
         cuv = new LogarClienteView();
         cliente = cuv.logarCliente();
-        ClienteDAO = new ClienteDAO();
-        ClienteDAO.inserirCliente(cliente);
-    }
-*/
-    public Cliente encontrarUsuario(String nome, String senha) {
-        return clienteDAO.findByNameAndSenha(nome, senha);
-
+        return cliente;
     }
 }

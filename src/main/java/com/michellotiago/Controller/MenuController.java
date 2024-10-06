@@ -1,5 +1,7 @@
 package com.michellotiago.Controller;
 
+import com.michellotiago.model.Cliente;
+import com.michellotiago.view.LogarClienteView;
 import com.michellotiago.view.MenuView;
 
 /**
@@ -7,6 +9,7 @@ import com.michellotiago.view.MenuView;
  **/
 public class MenuController {
     private MenuView menuView;
+    LogarClienteView logarClienteView;
     private int opcao;
     private CadastrarClienteController cadastrarClienteController;
     private LogarClienteController logarClienteController;
@@ -25,9 +28,10 @@ public class MenuController {
                     return;
                 case 2:
                     logarClienteController = new LogarClienteController();
-                    if (logarClienteController != null){
+                    Cliente cliente = logarClienteController.encontrarUsuario();
+                    if (cliente != null){
                         menuView.logSucesso();
-                        comprarController = new ComprarController();
+                        comprarController = new ComprarController(cliente);
                     }
 
                 case 9:

@@ -1,5 +1,6 @@
 package com.michellotiago.view;
 
+import com.michellotiago.model.Cliente;
 import com.michellotiago.model.Pedido;
 import com.michellotiago.model.Produto;
 import com.michellotiago.model.dao.ClienteDAO;
@@ -26,11 +27,13 @@ public class ComprarView {
     String empresa;
 
     ClienteDAO clienteDAO = new ClienteDAO();
+    Cliente cliente;
     PedidoDAO pedidoDAO = new PedidoDAO();
     ProdutoDAO produtoDAO = new ProdutoDAO();
     //Cliente cliente = new Cliente();
 
-    public ComprarView() {
+    public ComprarView(Cliente cliente) {
+        this.cliente = cliente;
         this.scanner = new Scanner(System.in);
     }
 
@@ -167,7 +170,7 @@ public class ComprarView {
                     + " - subtotal R$" + df.format(produto.getPreco()* produto.getQuantidade()));
         }
         System.out.println("\n O valor total da Compra é: R$" + df.format(valor + frete));
-        pedidoDAO.saveAll(produtosCompra);
+        pedidoDAO.saveAll(produtosCompra,cliente);
     }
 }
 
