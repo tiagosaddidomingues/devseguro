@@ -24,13 +24,13 @@ public class PedidoDAO {
 		String query = "INSERT INTO stj.pedido (id_cliente,id_produto,quantidade,preço_unitario,data_compra)"+
 				" VALUES ";
 		for (Produto produto : produtosCompra) {
-			query += "(" + cliente.getId() + "," + produto.getId() + "," + produto.getQuantidade() + "," + produto.getPreco() +
-					"," + data + ")" + ", ";
+			query += "(" + cliente.getId() + "," + produto.getId() + "," + produto.getQuantidade() + ","
+					+ produto.getPreco() + "," + data + ")" + ", ";
 
 			query = query.substring(0, query.length()-2);
 			try (PreparedStatement preparedStatements = conexao.getConnection().prepareStatement(query)) {
 				preparedStatements.executeUpdate();
-				preparedStatements.close();
+				//preparedStatements.close();
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}

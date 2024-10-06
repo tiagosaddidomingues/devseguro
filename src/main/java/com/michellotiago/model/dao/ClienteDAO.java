@@ -5,6 +5,9 @@ import com.michellotiago.model.Cliente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.Normalizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClienteDAO {
 
@@ -31,6 +34,8 @@ public class ClienteDAO {
 		}
 	}
 	public Cliente findByNameAndSenha(String nome, String senha) {
+		validar(nome);
+		validar(senha);
 		ClienteDAO clienteDao = new ClienteDAO();
 		String query = "SELECT nome,senha FROM STJ.CLIENTE where nome = ? and senha = ?";
 		try (PreparedStatement ps = conexao.getConnection().prepareStatement(query);) {
@@ -47,7 +52,24 @@ public class ClienteDAO {
 		return null;
 	}
 
+	private void validar(String texto) {
+
+		// Normalize the input
+		String normalizedInput = Normalizer.normalize(texto, Normalizer.Form.NFKC);
+
+		// Validate the normalized input
+		Pattern pattern = Pattern.compile("[<>]");
+		Matcher matcher = pattern.matcher(normalizedInput);
+		if (matcher.find()) {
+			throw new IllegalStateException("Invalid input detected!");
+		} else {
+			//System.out.println("Input is valid.");
+		}
+	}
 	public Cliente getCliente() {
 		return cliente;
+	}
+	private void sanitized(String texto){
+
 	}
 }
