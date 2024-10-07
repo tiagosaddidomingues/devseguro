@@ -16,8 +16,8 @@ public class Conexao {
     private Connection con;
 
     private Conexao() {
-        usuario = "admin";
-        senha = "admin";
+        usuario = System.getenv("DB_USUARIO");
+        senha = System.getenv("DB_SENHA");
         jdbc = "jdbc:mysql://localhost:3306/stj?useSSL=false";
 
         try {
