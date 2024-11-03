@@ -13,7 +13,6 @@ import com.michellotiago.model.Produto;
 
 public class PedidoDAO {
 
-	List<Pedido> pedidos = new ArrayList<>();
 	private Conexao conexao;
 	public PedidoDAO() {
 		conexao = Conexao.getConexao();

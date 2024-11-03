@@ -21,6 +21,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import static com.michellotiago.lib.Console.limparConsole;
 import static java.lang.Thread.sleep;
@@ -116,8 +117,11 @@ public class App {
         Cliente cliente = null;
         System.out.println("entre com o nome do usuário.");
         String nome = scanner.nextLine();
+        nome = sanitizarUser(nome);
         System.out.println("entre com a sua senha.");
         String senha = scanner.nextLine();
+        senha = sanitizarUser(senha);
+
         //cliente;// =clientes.findByNameAndSenha(nome, senha);
         if (cliente ==null) {
             System.out.println("Usuário não cadastrado ou senha invalida.");
@@ -125,6 +129,16 @@ public class App {
         }
         return cliente;
     }
+
+    public String sanitizarUser(String username) {
+        boolean verdade = Pattern.matches("[A-Za-z0-9_]+", username);
+        if (verdade){
+            return username;
+        } else {
+            throw new IllegalArgumentException();
+        }
+
+        }
 
     public void listarProdutos() {
         DecimalFormat df = new DecimalFormat("#,###.00");
