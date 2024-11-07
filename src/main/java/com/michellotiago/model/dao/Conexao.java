@@ -18,7 +18,7 @@ public class Conexao {
     private Conexao() {
         usuario = System.getenv("DB_USUARIO");
         senha = System.getenv("DB_SENHA");
-        jdbc = "jdbc:mysql://localhost:3306/stj?useSSL=false";
+        jdbc = "jdbc:mysql://127.0.0.1:3306/stj?useSSL=false";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

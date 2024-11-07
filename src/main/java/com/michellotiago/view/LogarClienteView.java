@@ -17,6 +17,8 @@ public class LogarClienteView {
 
     public LogarClienteView() {
         this.sc = new Scanner(System.in);
+        clienteDAO = new ClienteDAO();
+
     }
 
     public Cliente logarCliente(){

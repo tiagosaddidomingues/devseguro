@@ -122,7 +122,7 @@ public class App {
         String senha = scanner.nextLine();
         senha = sanitizarUser(senha);
 
-        //cliente;// =clientes.findByNameAndSenha(nome, senha);
+        cliente = clientes.findByNameAndSenha(nome, senha);
         if (cliente ==null) {
             System.out.println("Usuário não cadastrado ou senha invalida.");
             return null;
