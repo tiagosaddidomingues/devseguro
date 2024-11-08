@@ -1,6 +1,7 @@
 package com.michellotiago.model.dao;
 
 import com.michellotiago.model.Cliente;
+import com.michellotiago.util.Seguranca;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,64 +13,101 @@ import java.util.regex.Pattern;
 public class ClienteDAO {
 
 	private Conexao conexao;
-	private Cliente cliente;
+	private String query;
 
-	public boolean retornarIgualdadeDeStrings(String nome1, String nome2){
-		return nome1.equals(nome2);
-	}
 	public ClienteDAO() {
 		conexao = Conexao.getConexao();
 	}
 
-	public void inserirCliente(Cliente u) {
-		String query = "INSERT INTO stj.cliente (nome, senha) VALUES (?, ?)";
-		try (PreparedStatement ps = conexao.getConnection().prepareStatement(query);) {
-			ps.setString(1, u.getNome());
-			ps.setString(2, u.getSenha());
+	public void inserirCliente(Cliente cliente) {
+		query = "INSERT INTO stj.cliente (nome, senha, eMail, telefone, endereco) VALUES (?, ?, ?, ?, ?)";
+		try (PreparedStatement ps = conexao.getConnection().prepareStatement(query)) {
+			ps.setString(1, cliente.getNome());
+			ps.setString(2, Seguranca.hashMD5(cliente.getSenha()));
+			ps.setString(3, cliente.getEmail());
+			ps.setString(4, cliente.getTelefone());
+			ps.setString(5, cliente.getEndereco());
 			ps.executeUpdate();
-			ps.close();
-		}
-		catch(SQLException ex) {
-			ex.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println("Erro ao inserir cliente no banco de dados.");
 		}
 	}
-	public Cliente findByNameAndSenha(String nome, String senha) {
-		validar(nome);
-		validar(senha);
-		ClienteDAO clienteDao = new ClienteDAO();
-		String query = "SELECT nome,senha FROM STJ.CLIENTE where nome = ? and senha = ?";
-		try (PreparedStatement ps = conexao.getConnection().prepareStatement(query);) {
-			ps.setString(1, nome);
-			ps.setString(2, senha);
-			ResultSet rst = ps.executeQuery();
-			rst.next();
-            cliente = new Cliente(rst.getString(1),rst.getString(2));
-            return cliente;
+
+	public boolean atualizarCliente(Cliente cliente) {
+		query = "UPDATE stj.cliente SET nome = ?, senha = ?, eMail = ?, telefone = ?, endereco = ? WHERE id_cliente = ?";
+		try (PreparedStatement ps = conexao.getConnection().prepareStatement(query)) {
+			ps.setString(1, cliente.getNome());
+			ps.setString(2, Seguranca.hashMD5(cliente.getSenha()));
+			ps.setString(3, cliente.getEmail());
+			ps.setString(4, cliente.getTelefone());
+			ps.setString(5, cliente.getEndereco());
+			ps.setInt(6, cliente.getId());
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.err.println("Erro ao atualizar cliente no banco de dados.");
+			return false;
 		}
-		catch(SQLException ex) {
-			ex.printStackTrace();
+	}
+
+	public boolean excluirCliente(int id) {
+		query = "DELETE FROM stj.cliente WHERE id_cliente = ?";
+		try (PreparedStatement ps = conexao.getConnection().prepareStatement(query)) {
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.err.println("Erro ao excluir cliente no banco de dados.");
+			return false;
+		}
+	}
+
+	public Cliente findByNameAndSenha(String nome, String senha) {
+		validarEntrada(nome);
+		query = "SELECT id_cliente, nome, senha, eMail, telefone, endereco FROM stj.cliente WHERE nome = ? AND senha = ?";
+
+		System.out.println("Iniciando autenticação para usuário: " + nome);
+
+		try (PreparedStatement ps = conexao.getConnection().prepareStatement(query)) {
+			ps.setString(1, nome);
+
+			// Aplica o hash à senha para comparar com o banco de dados
+			String hashedSenha = Seguranca.hashMD5(senha);
+			System.out.println("Hash da senha inserida: " + hashedSenha);
+
+			ps.setString(2, hashedSenha);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					System.out.println("Usuário autenticado com sucesso!");
+
+					Cliente cliente = new Cliente(rs.getString("nome"), rs.getString("senha"));
+					cliente.setId(rs.getInt("id_cliente"));
+					cliente.setEmail(rs.getString("eMail"));
+					cliente.setTelefone(rs.getString("telefone"));
+					cliente.setEndereco(rs.getString("endereco"));
+
+					return cliente;
+				} else {
+					System.out.println("Nenhum usuário encontrado com as credenciais fornecidas.");
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Erro ao buscar cliente no banco de dados.");
+			e.printStackTrace();
 		}
 		return null;
 	}
 
-	private void validar(String texto) {
-
-		// Normalize the input
-		String normalizedInput = Normalizer.normalize(texto, Normalizer.Form.NFKC);
-
-		// Validate the normalized input
-		Pattern pattern = Pattern.compile("[<>]");
-		Matcher matcher = pattern.matcher(normalizedInput);
-		if (matcher.find()) {
-			throw new IllegalStateException("Invalid input detected!");
-		} else {
-			//System.out.println("Input is valid.");
+	private void validarEntrada(String texto) {
+		if (texto == null || texto.isEmpty()) {
+			throw new IllegalArgumentException("Input não pode ser nulo ou vazio.");
 		}
-	}
-	public Cliente getCliente() {
-		return cliente;
-	}
-	private void sanitized(String texto){
-
+		String inputNormalizado = Normalizer.normalize(texto, Normalizer.Form.NFKC);
+		Pattern padrao = Pattern.compile("[<>]");
+		Matcher matcher = padrao.matcher(inputNormalizado);
+		if (matcher.find()) {
+			throw new IllegalArgumentException("Caracteres inválidos detectados.");
+		}
 	}
 }

@@ -34,14 +34,11 @@ public class App {
     ClienteDAO clientes = new ClienteDAO();
     PedidoDAO pedidos = new PedidoDAO();
     ProdutoDAO produtos = new ProdutoDAO();
-    //Cliente cliente = new Cliente();
-
 
     public static void main(String[] args) {
         App app = new App();
         Cliente cliente = null;
         app.configuracaoRegional();
-        app.conectar();
         cliente = app.logar();
         if (cliente!=null) {
             app.observar(cliente);
@@ -91,9 +88,9 @@ public class App {
         produto.setPeso(0.20f);
         produto.setPreco(120.00f);
         produto.setQuantidade(30);
-       // produtos.inserir(produto);
+
         IObservador observador1 = new ObservadorSistema(1,"http://mesbla.com.br");
-        IObservador observador2 = new ObservadorEmail(2,clente.geteMail());
+        IObservador observador2 = new ObservadorEmail(2,clente.getEmail());
 
         ISubject subject = new Subject(produto);
         subject.registrarObservador(observador1);
@@ -108,9 +105,6 @@ public class App {
 
         empresa = instance.getProperty("loja");
         System.out.println(empresa);
-    }
-
-    public void conectar() {
     }
 
     public Cliente logar() {
@@ -144,7 +138,6 @@ public class App {
         DecimalFormat df = new DecimalFormat("#,###.00");
         System.out.println("\n\n Os produtos da loja são os seguintes:\n");
         List<Produto> produtos = this.produtos.findAll();
-        Pedido pedido = new Pedido();
         for (Produto produto : produtos) {
             System.out.println("item: " + produto.getId() + " - " + produto.getNome() + " - R$" + df.format(produto.getPreco()));
         }
@@ -154,7 +147,6 @@ public class App {
         int item = 0, quantidade = 0;
         DecimalFormat df = new DecimalFormat("#,###.00");
         String nome = "";
-        Pedido pedido = new Pedido();
         List<Produto> produtoscompra = new ArrayList<>();
         while (true) {
             limparConsole();

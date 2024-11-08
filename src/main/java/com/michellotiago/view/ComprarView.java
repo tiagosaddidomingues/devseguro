@@ -57,12 +57,12 @@ public class ComprarView {
         while (true) {
             limparConsole();
             listarProdutos();
-            System.out.println("Entre com produto e quantidade que deseja comprar: [nº do produto] , [quantidade] ou -1 para finalizar a seleção");
+            System.out.println("Entre com codigo do produto e a quantidade que deseja comprar: [codigo do produto] , [quantidade] ou -1 para finalizar a seleção");
             nome = scanner.nextLine();
             if (nome.equals("-1"))
                 break;
             if (nome.isEmpty() || !nome.contains(",")) {
-                System.out.println("Entre com produto e quantidade que deseja comprar: [nº do produto] , [quantidade] ou -1 para finalizar a seleção");
+                System.out.println("Entre com produto e quantidade que deseja comprar: [codigo do produto] , [quantidade] ou -1 para finalizar a seleção");
                 continue;
             }
             try {
@@ -117,7 +117,7 @@ public class ComprarView {
                     compraprodutos.add(novoProduto);
                 }
             }
-            System.out.println("Sua seleção de Compra até agora é a seguinte: ");
+            System.out.println("Sua seleção de compra até agora é a seguinte: ");
             for (Produto produto : compraprodutos) {
                 System.out.println("Item " + produto.getId() + ", quantidade " + produto.getQuantidade());
             }

@@ -2,22 +2,16 @@ package com.michellotiago.Controller;
 
 import com.michellotiago.model.Cliente;
 import com.michellotiago.view.ComprarView;
-import com.michellotiago.view.MenuView;
 
-/**
- * @author $ {USER}
- **/
 public class ComprarController {
     private ComprarView comprarView;
-    private int opcao;
-    private CadastrarClienteController cadastrarClienteController;
-    private LogarClienteController logarClienteController;
-    private ComprarController comprarController;
 
-    public ComprarController(Cliente cliente){
-        comprarView = new ComprarView(cliente);
-        comprarView.opcaoDeMenu();
+    public ComprarController(Cliente cliente) {
+        if (cliente != null) { // Certifica-se de que o cliente está autenticado antes de proceder
+            comprarView = new ComprarView(cliente);
+            comprarView.opcaoDeMenu();
+        } else {
+            System.out.println("Erro: cliente não autenticado.");
+        }
     }
-
 }
-
