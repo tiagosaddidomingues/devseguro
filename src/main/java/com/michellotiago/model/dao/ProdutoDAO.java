@@ -21,7 +21,7 @@ public class ProdutoDAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Produto produto = new Produto();
-				produto.setId(rs.getInt("id_produto"));          // Usando o nome da coluna
+				produto.setId(rs.getInt("id_produto"));
 				produto.setNome(rs.getString("nome"));
 				produto.setDescricao(rs.getString("descricao"));
 				produto.setPreco(rs.getFloat("preco"));
